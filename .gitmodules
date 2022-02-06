@@ -1,0 +1,21 @@
+[submodule "alt-hack"]
+	path = alt-hack
+	url = git@github.com:aaronmiller/alt-hack.git
+	branch = dev
+[submodule "emacs"]
+	path = emacs
+	url = git@github.com:aaronmiller/emacs.git
+	branch = amiller/emacs-30.2
+[submodule "Hack"]
+	path = Hack
+	url = git@github.com:aaronmiller/Hack.git
+	branch = dev
+[submodule "kubernetes-devtools"]
+	path = kubernetes-devtools
+	url = git@github.com:aaronmiller/kubernetes-devtools.git
+[submodule "qmk_firmware"]
+	path = qmk_firmware
+	url = git@github.com:aaronmiller/qmk_firmware.git
+[submodule "treemacs-nerd-icons"]
+	path = treemacs-nerd-icons
+	url = git@github.com:aaronmiller/treemacs-nerd-icons.git
