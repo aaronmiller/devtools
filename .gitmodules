@@ -1,0 +1,51 @@
+[submodule "emacs"]
+	path = emacs
+	url = git@github.com:aaronmiller/emacs.git
+	branch = amiller/emacs-28
+[submodule "qmk_firmware"]
+	path = qmk_firmware
+	url = git@github.com:aaronmiller/qmk_firmware.git
+	branch = amiller
+[submodule "zsh-autosuggestions"]
+	path = zsh-autosuggestions
+	url = git@github.com:zsh-users/zsh-autosuggestions.git
+[submodule "zsh-completions"]
+	path = zsh-completions
+	url = git@github.com:zsh-users/zsh-completions.git
+[submodule "zsh-syntax-highlighting"]
+	path = zsh-syntax-highlighting
+	url = git@github.com:zsh-users/zsh-syntax-highlighting.git
+[submodule "kubernetes-devtools"]
+	path = kubernetes-devtools
+	url = git@github.com:aaronmiller/kubernetes-devtools.git
+[submodule "alacritty"]
+	path = alacritty
+	url = git@github.com:aaronmiller/alacritty.git
+	branch = amiller
+[submodule "nordtheme-tmux"]
+	path = nordtheme-tmux
+	url = git@github.com:aaronmiller/nordtheme-tmux.git
+	branch = develop
+[submodule "k9s"]
+	path = k9s
+	url = git@github.com:aaronmiller/k9s.git
+[submodule "doomemacs"]
+	path = doomemacs
+	url = git@github.com:aaronmiller/doomemacs.git
+	branch = amiller
+[submodule "treemacs-nerd-icons"]
+	path = treemacs-nerd-icons
+	url = git@github.com:aaronmiller/treemacs-nerd-icons.git
+	branch = amiller
+[submodule "Hack"]
+	path = Hack
+	url = git@github.com:aaronmiller/Hack.git
+	branch = dev
+[submodule "alt-hack"]
+	path = alt-hack
+	url = git@github.com:aaronmiller/alt-hack.git
+	branch = dev
+[submodule "emacs-libvterm"]
+	path = emacs-libvterm
+	url = git@github.com:aaronmiller/emacs-libvterm.git
+	branch = amiller
