@@ -33,7 +33,7 @@ ssh_add() {
 }
 
 install_asdf_programs() {
-  cat ~/.tool-versions | cut -d ' ' -f 1 | while read line; do asdf plugin add $line; asdf install $line; done
+  cat < ~/.tool-versions | cut -d ' ' -f 1 | while read -r line; do asdf plugin add "$line"; asdf install "$line"; done
 }
 
 ssh_keygen() {
@@ -47,7 +47,7 @@ ssh_keygen() {
 
 install_dotfiles() {
   if [[ ! -d $DOTFILES_DIR ]]; then
-    /bin/bash -c "$(git clone --recurse-submodules git@github.com:aaronmiller/dotfiles.git ${HOME}/dotfiles)"
+    /bin/bash -c "$(git clone --recurse-submodules git@github.com:aaronmiller/dotfiles.git "${HOME}"/dotfiles)"
   else
     echo -n "Dotfiles is already installed."
   fi
@@ -75,7 +75,7 @@ uninstall_dotfiles() {
 
 install_symlinks() {
   if [[ -x "$(command -v stow)" ]]; then
-    /bin/bash -c "$(stow -d ${DOTFILES_DIR} . --ignore="\.DS_Store" --ignore="\.git")"
+    /bin/bash -c "$(stow -d "${DOTFILES_DIR}" . --ignore="\.DS_Store" --ignore="\.git")"
   else
     echo -n "stow is not installed. Please install stow."
   fi
@@ -83,7 +83,7 @@ install_symlinks() {
 
 uninstall_symlinks() {
   if [[ -x "$(command -v stow)" ]]; then
-    /bin/bash -c "$(stow -d ${DOTFILES_DIR} -D . --ignore="\.DS_Store" --ignore="\.git")"
+    /bin/bash -c "$(stow -d "${DOTFILES_DIR}" -D . --ignore="\.DS_Store" --ignore="\.git")"
   else
     echo -n "stow does not exist, or is already uninstalled."
   fi
@@ -103,7 +103,7 @@ unset_custom_zsh() {
   homebrew_zsh_line=$(tail -n 1 /etc/shells)
 
   if [[ $homebrew_zsh_line == "/usr/local/bin/zsh" ]]; then
-    sudo /bin/bash -c "sed '$d' /etc/shells"
+    sudo /bin/bash -c "sed -i '$d' /etc/shells"
   fi
 
   chsh -s /bin/zsh
@@ -113,7 +113,7 @@ install_ohmyzsh() {
   if [[ ! -d "${HOME}/.oh-my-zsh" ]]; then
     sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --keep-zshrc
 
-    if [[ ! -z $WORK_DOTFILES_DIR ]]; then
+    if [[ -n $WORK_DOTFILES_DIR ]]; then
       ln -sf "${WORK_DOTFILES_DIR}/.zshrc" "${HOME}/.zshrc"
     else
       ln -sf "${DOTFILES_DIR}/.zshrc" "${HOME}/.zshrc"
@@ -133,7 +133,7 @@ uninstall_ohmyzsh() {
       if [[ $input = "y" || $input = "yes" ]]; then
         sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/uninstall.sh)"
 
-        if [[ ! -z $WORK_DOTFILES_DIR ]]; then
+        if [[ -n $WORK_DOTFILES_DIR ]]; then
           ln -sf "${WORK_DOTFILES_DIR}/.zshrc" "${HOME}/.zshrc"
         else
           ln -sf "${DOTFILES_DIR}/.zshrc" "${HOME}/.zshrc"
@@ -179,7 +179,7 @@ uninstall_homebrew() {
 
 install_alacritty() {
   if [[ ! -f "${DEVTOOLS_DIR}/alacritty/target/release/alacritty" ]]; then
-    cd "${DEVTOOLS_DIR}/alacritty"
+    cd "${DEVTOOLS_DIR}/alacritty" || return
 
     if [[ $(uname -m) == "arm64" ]]; then
       rustup target add aarch64-apple-darwin
@@ -227,7 +227,7 @@ install_emacs() {
 
 install_doomemacs() {
   if [[ ! -d $EMACSDIR ]]; then
-    cd ${HOME}
+    cd "${HOME}" || return
     ln -sf devtools/doomemacs .emacs.d
     doom install
   else
@@ -271,7 +271,7 @@ uninstall_hack_font() {
       read -r input
 
       if [[ $input = "y" || $input = "yes" ]]; then
-        /bin/bash -c "$(rm -rf "${HOME}/Library/Fonts/Hack-"*.ttf)"
+        /bin/bash -c "$(rm -rf "${HOME}/Library/Fonts/Hack"*.ttf)"
 
         return
       else
