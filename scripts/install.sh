@@ -257,14 +257,7 @@ uninstall_doomemacs() {
 
 install_hack_font() {
   if [[ ! -f "${HOME}/Library/Fonts/Hack-Regular.ttf" ]]; then
-    cd "${DEVTOOLS_DIR}/alt-hack"
-    ./patch-hack.sh
-    cd "${DEVTOOLS_DIR}/Hack"
-    mkvirtualenv hack-font -p python3
-    pip3 install fontmake
-    make ttf-system
     cp build/ttf/* "${HOME}/Library/Fonts/"
-    deactivate
   else
     echo -n "font hack is already installed."
   fi
