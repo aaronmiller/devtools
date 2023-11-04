@@ -12,6 +12,7 @@ export PATH="${DEVTOOLS_DIR}/emacs/nextstep/Emacs.app/Contents/MacOS/bin:${PATH}
 export PATH="${DEVTOOLS_DIR}/doomemacs/bin:${PATH}"
 export PATH="${DEVTOOLS_DIR}/k9s/execs:${PATH}"
 export PATH="${DEVTOOLS_DIR}/alacritty/target/release:${PATH}"
+export PATH="$(brew --prefix)/opt/make/libexec/gnubin:${PATH}"
 export PATH="$(brew --prefix)/opt/gnu-getopt/bin:${PATH}"
 export PATH="$(brew --prefix)/opt/grep/libexec/gnubin:${PATH}"
 export PATH="$(brew --prefix)/opt/gnu-tar/libexec/gnubin:${PATH}"
