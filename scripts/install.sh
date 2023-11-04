@@ -264,7 +264,7 @@ install_hack_font() {
 }
 
 uninstall_hack_font() {
-  if [[ -f "${HOME}/Library/Fonts/Hack-Regular.ttf" ]]; then
+  if [[ -f "${HOME}/Library/Fonts/HackNerdFontMono-Regular.ttf" ]]; then
     echo -n "Do you want to uninstall hack font? Type y or yes: "
 
     while true; do
