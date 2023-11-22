@@ -282,9 +282,3 @@ uninstall_hack_font() {
     echo -n "hack font does not exist, or is already uninstalled."
   fi
 }
-
-install_dockfmt() {
-  if [[ ! -x dockfmt ]]; then
-    /bin/bash -c "$(go install github.com/jessfraz/dockfmt@latest)"
-  fi
-}
