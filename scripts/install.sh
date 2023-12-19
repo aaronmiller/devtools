@@ -32,10 +32,6 @@ ssh_add() {
   ssh-add --apple-use-keychain ~/.ssh/id_ed25519
 }
 
-install_asdf_programs() {
-  cat < ~/.tool-versions | cut -d ' ' -f 1 | while read -r line; do asdf plugin add "$line"; asdf install "$line"; done
-}
-
 ssh_keygen() {
   if [[ ! -f "${HOME}/.ssh/id_ed25519" ]]; then
     echo -n "Please enter your email address for the ssh key comment: "
