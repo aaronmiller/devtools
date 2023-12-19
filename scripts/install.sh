@@ -253,7 +253,7 @@ uninstall_doomemacs() {
 
 install_hack_font() {
   if [[ ! -f "${HOME}/Library/Fonts/HackNerdFontMono-Regular.ttf" ]]; then
-    cp ${DEVTOOLS_DIR}/Hack/build/ttf/* "${HOME}/Library/Fonts/"
+    cp "${DEVTOOLS_DIR}/Hack/build/ttf/"* "${HOME}/Library/Fonts/"
   else
     echo -n "font hack is already installed."
   fi

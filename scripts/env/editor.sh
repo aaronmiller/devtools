@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-export EDITOR="emacsclient"
 export ALTERNATE_EDITOR=""
+export EDITOR="emacsclient"
