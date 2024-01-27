@@ -29,10 +29,6 @@
 [submodule "k9s"]
 	path = k9s
 	url = git@github.com:aaronmiller/k9s.git
-[submodule "doomemacs"]
-	path = doomemacs
-	url = git@github.com:aaronmiller/doomemacs.git
-	branch = amiller
 [submodule "treemacs-nerd-icons"]
 	path = treemacs-nerd-icons
 	url = git@github.com:aaronmiller/treemacs-nerd-icons.git
