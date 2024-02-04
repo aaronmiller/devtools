@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+fix_compaudit() {
+  compaudit | xargs chmod g-w,o-w
+}
+
 install_k9s() {
   if [[ ! -x "$(command -v k9s)" ]]; then
     cd "${DEVTOOLS_DIR}/k9s" && make build
