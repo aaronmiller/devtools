@@ -47,6 +47,7 @@ ssh_keygen() {
 
 install_asdf_plugins() {
   cut -d " " -f 1 < "${HOME}/.tool-versions" | while read -r line; do asdf plugin add "${line}"; done
+  asdf install
 }
 
 install_dotfiles() {
