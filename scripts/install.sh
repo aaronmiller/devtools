@@ -45,6 +45,10 @@ ssh_keygen() {
   fi
 }
 
+install_asdf_plugins() {
+  cut -d " " -f 1 < "${HOME}/.tool-versions" | while read -r line; do asdf plugin add "${line}"; done
+}
+
 install_dotfiles() {
   if [[ ! -d $DOTFILES_DIR ]]; then
     /bin/bash -c "$(git clone --recurse-submodules git@github.com:aaronmiller/dotfiles.git "${HOME}"/dotfiles)"
