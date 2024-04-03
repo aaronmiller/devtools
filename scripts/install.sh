@@ -95,23 +95,25 @@ uninstall_symlinks() {
 }
 
 set_custom_zsh() {
-  homebrew_zsh_line=$(tail -n 1 /etc/shells)
+  homebrew_zsh="$(brew --prefix)/bin/zsh"
 
-  if [[ $homebrew_zsh_line != "/usr/local/bin/zsh" ]]; then
-    sudo /bin/bash -c "echo $(brew --prefix)/bin/zsh >> /etc/shells"
+  if ! grep -Fxq "${homebrew_zsh}" /etc/shells; then
+    sudo /bin/bash -c "echo ${homebrew_zsh} >> /etc/shells"
+    chsh -s "$(brew --prefix)/bin/zsh"
+  else
+    echo -n "${homebrew_zsh} is already set in /etc/shells."
   fi
-
-  chsh -s "$(brew --prefix)/bin/zsh"
 }
 
 unset_custom_zsh() {
-  homebrew_zsh_line=$(tail -n 1 /etc/shells)
+  homebrew_zsh="$(brew --prefix)/bin/zsh"
 
-  if [[ $homebrew_zsh_line == "/usr/local/bin/zsh" ]]; then
-    sudo /bin/bash -c "sed -i '$d' /etc/shells"
+  if grep -Fxq "${homebrew_zsh}" /etc/shells; then
+    sudo /bin/bash -c "sed -i /${homebrew_zsh//\//\\\/}/d /etc/shells"
+    chsh -s /bin/zsh
+  else
+    echo -n "${homebrew_zsh} is already unset in /etc/shells."
   fi
-
-  chsh -s /bin/zsh
 }
 
 install_ohmyzsh() {
