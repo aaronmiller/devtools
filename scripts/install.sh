@@ -293,3 +293,14 @@ uninstall_hack_font() {
     echo -n "hack font does not exist, or is already uninstalled."
   fi
 }
+
+configure_gatech_access() {
+  input="machine github.gatech.edu\n"
+  echo -n "enter your gatech username: "
+  read -r login
+  input+="login ${login}\n"
+  echo -n "enter your gatech password: "
+  read -rs password
+  input+="password ${password}"
+  echo "${input}" > ~/.netrc
+}
