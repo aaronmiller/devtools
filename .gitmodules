@@ -49,6 +49,3 @@
 	path = doomemacs
 	url = git@github.com:doomemacs/doomemacs.git
 	branch = master
-[submodule "devdocs"]
-	path = devdocs
-	url = git@github.com:aaronmiller/devdocs.git
