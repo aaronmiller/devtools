@@ -46,12 +46,12 @@ ssh_keygen() {
 }
 
 install_asdf_plugins() {
-  cut -d " " -f 1 < "${HOME}/.tool-versions" | while read -r line; do asdf plugin add "${line}"; done
+  cut -d " " -f 1 <"${HOME}/.tool-versions" | while read -r line; do asdf plugin add "${line}"; done
   asdf install
 }
 
 update_asdf_plugins() {
-  cut -d " " -f 1 < "${HOME}/.tool-versions" | while read -r line; do asdf plugin update "${line}"; done
+  cut -d " " -f 1 <"${HOME}/.tool-versions" | while read -r line; do asdf plugin update "${line}"; done
 }
 
 install_dotfiles() {
@@ -252,7 +252,7 @@ uninstall_doomemacs() {
 
     while true; do
       read -r input
-      
+
       if [[ $input = "y" || $input = "yes" ]]; then
         cd "${DEVTOOLS_DIR}/doomemacs" && rm -rf .local/straight/
 
@@ -263,7 +263,7 @@ uninstall_doomemacs() {
     done
   else
     echo -n "doom emacs does not exist, or is already uninstalled."
-  fi  
+  fi
 }
 
 install_hack_font() {
@@ -302,5 +302,5 @@ configure_gatech_access() {
   echo -n "enter your gatech password: "
   read -rs password
   input+="password ${password}"
-  echo "${input}" > ~/.netrc
+  echo "${input}" >~/.netrc
 }
