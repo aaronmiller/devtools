@@ -241,20 +241,27 @@ install_doomemacs() {
     cd "${HOME}" || return
     git clone --depth 1 https://github.com/doomemacs/doomemacs "${HOME}/.emacs.d"
     doom install
+    return
+  elif [[ ! -d "${EMACSDIR}/.local" ]]; then
+    doom install
+    return
   else
-    echo -n "doom emacs is already installed."
+    echo -n "doomemacs is already installed."
   fi
 }
 
 uninstall_doomemacs() {
-  if [[ -d $EMACSDIR ]]; then
-    echo -n "Do you want to uninstall emacs doom? Type y or yes: "
+  if [[ ! -d $EMACSDIR ]]; then
+    echo -n "doomemacs does not exist, or is already uninstalled."
+    return
+  elif [[ -d "${EMACSDIR}/.local" ]]; then
+    echo -n "Do you want to uninstall doomemacs? Type y or yes: "
 
     while true; do
       read -r input
 
       if [[ $input = "y" || $input = "yes" ]]; then
-        cd "${HOME}/.emacs.d" && rm -rf .local/straight/
+        cd "${HOME}/.emacs.d" && rm -rf .local/
 
         return
       else
@@ -262,7 +269,7 @@ uninstall_doomemacs() {
       fi
     done
   else
-    echo -n "doom emacs does not exist, or is already uninstalled."
+    echo -n "doomemacs does not exist, or is already uninstalled."
   fi
 }
 
