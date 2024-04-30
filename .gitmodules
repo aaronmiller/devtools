@@ -34,7 +34,3 @@
 	path = alt-hack
 	url = git@github.com:aaronmiller/alt-hack.git
 	branch = dev
-[submodule "emacs-libvterm"]
-	path = emacs-libvterm
-	url = git@github.com:aaronmiller/emacs-libvterm.git
-	branch = amiller
