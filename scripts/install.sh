@@ -239,7 +239,7 @@ install_emacs() {
 install_doomemacs() {
   if [[ ! -d $EMACSDIR ]]; then
     cd "${HOME}" || return
-    ln -sf devtools/doomemacs .emacs.d
+    git clone --depth 1 https://github.com/doomemacs/doomemacs "${HOME}/.emacs.d"
     doom install
   else
     echo -n "doom emacs is already installed."
@@ -254,7 +254,7 @@ uninstall_doomemacs() {
       read -r input
 
       if [[ $input = "y" || $input = "yes" ]]; then
-        cd "${DEVTOOLS_DIR}/doomemacs" && rm -rf .local/straight/
+        cd "${HOME}/.emacs.d" && rm -rf .local/straight/
 
         return
       else
