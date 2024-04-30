@@ -41,7 +41,3 @@
 	path = emacs-libvterm
 	url = git@github.com:aaronmiller/emacs-libvterm.git
 	branch = amiller
-[submodule "doomemacs"]
-	path = doomemacs
-	url = git@github.com:doomemacs/doomemacs.git
-	branch = master
