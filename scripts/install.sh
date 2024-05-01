@@ -84,7 +84,10 @@ uninstall_dotfiles() {
 
 install_symlinks() {
   if [[ -x "$(command -v stow)" ]]; then
-    /bin/bash -c "$(stow -d "${DOTFILES_DIR}" . --ignore="\.DS_Store" --ignore="\.git" --ignore="\.gitignore" --ignore="\.gitmodules")"
+    /bin/bash -c "$(stow --adopt -d "${DOTFILES_DIR}" . --ignore="\.DS_Store" --ignore="\.git" --ignore="\.gitignore" --ignore="\.gitmodules")"
+    cd "${DOTFILES_DIR}" || return
+    git restore .
+    cd "${HOME}" || return
   else
     echo -n "stow is not installed. Please install stow."
   fi
