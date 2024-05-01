@@ -92,7 +92,7 @@ install_symlinks() {
 
 uninstall_symlinks() {
   if [[ -x "$(command -v stow)" ]]; then
-    /bin/bash -c "$(stow -d "${DOTFILES_DIR}" -D . --ignore="\.DS_Store" --ignore="\.git")"
+    /bin/bash -c "$(stow -d "${DOTFILES_DIR}" -D . --ignore="\.DS_Store" --ignore="\.git" --ignore="\.gitignore" --ignore="\.gitmodules")"
   else
     echo -n "stow does not exist, or is already uninstalled."
   fi
