@@ -2,9 +2,6 @@
 	path = emacs
 	url = git@github.com:aaronmiller/emacs.git
 	branch = amiller/emacs-28
-[submodule "qmk_firmware"]
-	path = qmk_firmware
-	url = git@github.com:aaronmiller/qmk_firmware.git
 [submodule "zsh-autosuggestions"]
 	path = zsh-autosuggestions
 	url = git@github.com:zsh-users/zsh-autosuggestions.git
@@ -33,3 +30,6 @@
 	path = alt-hack
 	url = git@github.com:aaronmiller/alt-hack.git
 	branch = dev
+[submodule "qmk_firmware"]
+	path = qmk_firmware
+	url = git@github.com:aaronmiller/qmk_firmware.git
