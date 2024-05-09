@@ -21,7 +21,6 @@
 [submodule "treemacs-nerd-icons"]
 	path = treemacs-nerd-icons
 	url = git@github.com:aaronmiller/treemacs-nerd-icons.git
-	branch = amiller
 [submodule "Hack"]
 	path = Hack
 	url = git@github.com:aaronmiller/Hack.git
