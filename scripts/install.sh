@@ -4,10 +4,6 @@ fix_compaudit() {
   compaudit | xargs chmod g-w,o-w
 }
 
-ssh_add() {
-  ssh-add --apple-use-keychain ~/.ssh/id_ed25519
-}
-
 ssh_keygen() {
   if [[ ! -f "${HOME}/.ssh/id_ed25519" ]]; then
     echo -n "Please enter your email address for the ssh key comment: "
@@ -15,15 +11,6 @@ ssh_keygen() {
 
     ssh-keygen -o -a 100 -t ed25519 -C "${input}"
   fi
-}
-
-install_asdf_plugins() {
-  cut -d " " -f 1 <"${HOME}/.tool-versions" | while read -r line; do asdf plugin add "${line}"; done
-  asdf install
-}
-
-update_asdf_plugins() {
-  cut -d " " -f 1 <"${HOME}/.tool-versions" | while read -r line; do asdf plugin update "${line}"; done
 }
 
 install_dotfiles() {
@@ -54,46 +41,213 @@ uninstall_dotfiles() {
   fi
 }
 
-install_symlinks() {
-  if [[ -x "$(command -v stow)" ]]; then
-    /bin/bash -c "$(stow --adopt -d "${DOTFILES_DIR}" . --ignore="\.DS_Store" --ignore="\.git" --ignore="\.gitignore" --ignore="\.gitmodules")"
-    cd "${DOTFILES_DIR}" || return
-    git restore .
-    cd "${HOME}" || return
-  else
-    echo -n "stow is not installed. Please install stow."
-  fi
-}
+if [[ $(uname -s) == "Darwin" ]]; then
+  ssh_add() {
+    ssh-add --apple-use-keychain ~/.ssh/id_ed25519
+  }
 
-uninstall_symlinks() {
-  if [[ -x "$(command -v stow)" ]]; then
-    /bin/bash -c "$(stow -d "${DOTFILES_DIR}" -D . --ignore="\.DS_Store" --ignore="\.git" --ignore="\.gitignore" --ignore="\.gitmodules")"
-  else
-    echo -n "stow does not exist, or is already uninstalled."
-  fi
-}
+  install_asdf_plugins() {
+    cut -d " " -f 1 <"${HOME}/.tool-versions" | while read -r line; do asdf plugin add "${line}"; done
+    asdf install
+  }
 
-set_custom_zsh() {
-  homebrew_zsh="$(brew --prefix)/bin/zsh"
+  update_asdf_plugins() {
+    cut -d " " -f 1 <"${HOME}/.tool-versions" | while read -r line; do asdf plugin update "${line}"; done
+  }
 
-  if ! grep -Fxq "${homebrew_zsh}" /etc/shells; then
-    sudo /bin/bash -c "echo ${homebrew_zsh} >> /etc/shells"
-    chsh -s "$(brew --prefix)/bin/zsh"
-  else
-    echo -n "${homebrew_zsh} is already set in /etc/shells."
-  fi
-}
+  install_symlinks() {
+    if [[ -x "$(command -v stow)" ]]; then
+      /bin/bash -c "$(stow --adopt -d "${DOTFILES_DIR}" . --ignore="\.DS_Store" --ignore="\.git" --ignore="\.gitignore" --ignore="\.gitmodules")"
+      cd "${DOTFILES_DIR}" || return
+      git restore .
+      cd "${HOME}" || return
+    else
+      echo -n "stow is not installed. Please install stow."
+    fi
+  }
 
-unset_custom_zsh() {
-  homebrew_zsh="$(brew --prefix)/bin/zsh"
+  uninstall_symlinks() {
+    if [[ -x "$(command -v stow)" ]]; then
+      /bin/bash -c "$(stow -d "${DOTFILES_DIR}" -D . --ignore="\.DS_Store" --ignore="\.git" --ignore="\.gitignore" --ignore="\.gitmodules")"
+    else
+      echo -n "stow does not exist, or is already uninstalled."
+    fi
+  }
 
-  if grep -Fxq "${homebrew_zsh}" /etc/shells; then
-    sudo /bin/bash -c "sed -i /${homebrew_zsh//\//\\\/}/d /etc/shells"
-    chsh -s /bin/zsh
-  else
-    echo -n "${homebrew_zsh} is already unset in /etc/shells."
-  fi
-}
+  set_custom_zsh() {
+    homebrew_zsh="$(brew --prefix)/bin/zsh"
+
+    if ! grep -Fxq "${homebrew_zsh}" /etc/shells; then
+      sudo /bin/bash -c "echo ${homebrew_zsh} >> /etc/shells"
+      chsh -s "$(brew --prefix)/bin/zsh"
+    else
+      echo -n "${homebrew_zsh} is already set in /etc/shells."
+    fi
+  }
+
+  unset_custom_zsh() {
+    homebrew_zsh="$(brew --prefix)/bin/zsh"
+
+    if grep -Fxq "${homebrew_zsh}" /etc/shells; then
+      sudo /bin/bash -c "sed -i /${homebrew_zsh//\//\\\/}/d /etc/shells"
+      chsh -s /bin/zsh
+    else
+      echo -n "${homebrew_zsh} is already unset in /etc/shells."
+    fi
+  }
+
+  install_homebrew() {
+    if [[ ! -x "$(command -v brew)" ]]; then
+      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    else
+      echo "brew is already installed."
+    fi
+  }
+
+  uninstall_homebrew() {
+    if [[ -x "$(command -v brew)" ]]; then
+      echo -n "Do you want to uninstall homebrew? Type y or yes: "
+
+      while true; do
+        read -r input
+
+        if [[ $input = "y" || $input = "yes" ]]; then
+          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)"
+
+          return
+        else
+          echo -n "${input} is an invalid option. Please type y or yes: "
+        fi
+      done
+    else
+      echo -n "homebrew does not exist, or is already uninstalled."
+    fi
+  }
+
+  install_alacritty() {
+    if [[ ! -f "${DEVTOOLS_DIR}/alacritty/target/release/alacritty" ]]; then
+      cd "${DEVTOOLS_DIR}/alacritty" || return
+
+      if [[ $(uname -m) == "arm64" ]]; then
+        rustup target add aarch64-apple-darwin
+      elif [[ $(uname -m) == "x86_64" ]]; then
+        rustup target add x86_64-apple-darwin
+      fi
+
+      make app
+      sudo tic -xe alacritty,alacritty-direct extra/alacritty.info
+      ln -sf "${DEVTOOLS_DIR}/alacritty/target/release/osx/Alacritty.app" "/Applications"
+    else
+      echo -n "alacritty is already installed."
+    fi
+  }
+
+  uninstall_alacritty() {
+    if [[ -f "${DEVTOOLS_DIR}/alacritty/target/release/alacritty" ]]; then
+      echo -n "Do you want to uninstall alacritty? Type y or yes: "
+
+      while true; do
+        read -r input
+
+        if [[ $input = "y" || $input = "yes" ]]; then
+          cd "${DEVTOOLS_DIR}/alacritty" && rm -rf target && git clean -dfx
+          rm -rf "Applications/Alacritty.app"
+
+          return
+        else
+          echo -n "${input} is an invalid option. Please type y or yes: "
+        fi
+      done
+    else
+      echo -n "alacritty does not exist, or is already uninstalled."
+    fi
+  }
+
+  install_emacs() {
+    if [[ $1 == "-f" || ! -x "$(command -v emacs)" ]]; then
+      cd "${DEVTOOLS_DIR}/emacs" && ./autogen.sh && ./configure --with-json --with-modules --with-native-compilation && make && make install
+      ln -sf "${DEVTOOLS_DIR}/emacs/nextstep/Emacs.app" "/Applications"
+    else
+      echo -n "emacs is already installed."
+    fi
+  }
+
+  install_doomemacs() {
+    if [[ ! -d $EMACSDIR ]]; then
+      cd "${HOME}" || return
+      git clone --depth 1 https://github.com/doomemacs/doomemacs "${HOME}/.emacs.d"
+      doom install
+      return
+    elif [[ ! -d "${EMACSDIR}/.local" ]]; then
+      doom install
+      return
+    else
+      echo -n "doomemacs is already installed."
+    fi
+  }
+
+  uninstall_doomemacs() {
+    if [[ ! -d $EMACSDIR ]]; then
+      echo -n "doomemacs does not exist, or is already uninstalled."
+      return
+    elif [[ -d "${EMACSDIR}/.local" ]]; then
+      echo -n "Do you want to uninstall doomemacs? Type y or yes: "
+
+      while true; do
+        read -r input
+
+        if [[ $input = "y" || $input = "yes" ]]; then
+          cd "${HOME}/.emacs.d" && rm -rf .local/
+
+          return
+        else
+          echo -n "${input} is an invalid option. Please type y or yes: "
+        fi
+      done
+    else
+      echo -n "doomemacs does not exist, or is already uninstalled."
+    fi
+  }
+
+  install_hack_font() {
+    if [[ ! -f "${HOME}/Library/Fonts/HackNerdFontMono-Regular.ttf" ]]; then
+      cp "${DEVTOOLS_DIR}/Hack/build/ttf/"* "${HOME}/Library/Fonts/"
+    else
+      echo -n "font hack is already installed."
+    fi
+  }
+
+  uninstall_hack_font() {
+    if [[ -f "${HOME}/Library/Fonts/HackNerdFontMono-Regular.ttf" ]]; then
+      echo -n "Do you want to uninstall hack font? Type y or yes: "
+
+      while true; do
+        read -r input
+
+        if [[ $input = "y" || $input = "yes" ]]; then
+          /bin/bash -c "$(rm -rf "${HOME}/Library/Fonts/Hack"*.ttf)"
+
+          return
+        else
+          echo -n "${input} is an invalid option. Please type y or yes: "
+        fi
+      done
+    else
+      echo -n "hack font does not exist, or is already uninstalled."
+    fi
+  }
+
+  configure_gatech_access() {
+    input="machine github.gatech.edu\n"
+    echo -n "enter your gatech username: "
+    read -r login
+    input+="login ${login}\n"
+    echo -n "enter your gatech password: "
+    read -rs password
+    input+="password ${password}"
+    echo "${input}" >~/.netrc
+  }
+fi
 
 install_ohmyzsh() {
   if [[ ! -d "${HOME}/.oh-my-zsh" ]]; then
@@ -133,156 +287,4 @@ uninstall_ohmyzsh() {
   else
     echo "ohmyzsh does not exist, or is already uninstalled."
   fi
-}
-
-install_homebrew() {
-  if [[ ! -x "$(command -v brew)" ]]; then
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  else
-    echo "brew is already installed."
-  fi
-}
-
-uninstall_homebrew() {
-  if [[ -x "$(command -v brew)" ]]; then
-    echo -n "Do you want to uninstall homebrew? Type y or yes: "
-
-    while true; do
-      read -r input
-
-      if [[ $input = "y" || $input = "yes" ]]; then
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)"
-
-        return
-      else
-        echo -n "${input} is an invalid option. Please type y or yes: "
-      fi
-    done
-  else
-    echo -n "homebrew does not exist, or is already uninstalled."
-  fi
-}
-
-install_alacritty() {
-  if [[ ! -f "${DEVTOOLS_DIR}/alacritty/target/release/alacritty" ]]; then
-    cd "${DEVTOOLS_DIR}/alacritty" || return
-
-    if [[ $(uname -m) == "arm64" ]]; then
-      rustup target add aarch64-apple-darwin
-    elif [[ $(uname -m) == "x86_64" ]]; then
-      rustup target add x86_64-apple-darwin
-    fi
-
-    make app
-    sudo tic -xe alacritty,alacritty-direct extra/alacritty.info
-    ln -sf "${DEVTOOLS_DIR}/alacritty/target/release/osx/Alacritty.app" "/Applications"
-  else
-    echo -n "alacritty is already installed."
-  fi
-}
-
-uninstall_alacritty() {
-  if [[ -f "${DEVTOOLS_DIR}/alacritty/target/release/alacritty" ]]; then
-    echo -n "Do you want to uninstall alacritty? Type y or yes: "
-
-    while true; do
-      read -r input
-
-      if [[ $input = "y" || $input = "yes" ]]; then
-        cd "${DEVTOOLS_DIR}/alacritty" && rm -rf target && git clean -dfx
-        rm -rf "Applications/Alacritty.app"
-
-        return
-      else
-        echo -n "${input} is an invalid option. Please type y or yes: "
-      fi
-    done
-  else
-    echo -n "alacritty does not exist, or is already uninstalled."
-  fi
-}
-
-install_emacs() {
-  if [[ $1 == "-f" || ! -x "$(command -v emacs)" ]]; then
-    cd "${DEVTOOLS_DIR}/emacs" && ./autogen.sh && ./configure --with-json --with-modules --with-native-compilation && make && make install
-    ln -sf "${DEVTOOLS_DIR}/emacs/nextstep/Emacs.app" "/Applications"
-  else
-    echo -n "emacs is already installed."
-  fi
-}
-
-install_doomemacs() {
-  if [[ ! -d $EMACSDIR ]]; then
-    cd "${HOME}" || return
-    git clone --depth 1 https://github.com/doomemacs/doomemacs "${HOME}/.emacs.d"
-    doom install
-    return
-  elif [[ ! -d "${EMACSDIR}/.local" ]]; then
-    doom install
-    return
-  else
-    echo -n "doomemacs is already installed."
-  fi
-}
-
-uninstall_doomemacs() {
-  if [[ ! -d $EMACSDIR ]]; then
-    echo -n "doomemacs does not exist, or is already uninstalled."
-    return
-  elif [[ -d "${EMACSDIR}/.local" ]]; then
-    echo -n "Do you want to uninstall doomemacs? Type y or yes: "
-
-    while true; do
-      read -r input
-
-      if [[ $input = "y" || $input = "yes" ]]; then
-        cd "${HOME}/.emacs.d" && rm -rf .local/
-
-        return
-      else
-        echo -n "${input} is an invalid option. Please type y or yes: "
-      fi
-    done
-  else
-    echo -n "doomemacs does not exist, or is already uninstalled."
-  fi
-}
-
-install_hack_font() {
-  if [[ ! -f "${HOME}/Library/Fonts/HackNerdFontMono-Regular.ttf" ]]; then
-    cp "${DEVTOOLS_DIR}/Hack/build/ttf/"* "${HOME}/Library/Fonts/"
-  else
-    echo -n "font hack is already installed."
-  fi
-}
-
-uninstall_hack_font() {
-  if [[ -f "${HOME}/Library/Fonts/HackNerdFontMono-Regular.ttf" ]]; then
-    echo -n "Do you want to uninstall hack font? Type y or yes: "
-
-    while true; do
-      read -r input
-
-      if [[ $input = "y" || $input = "yes" ]]; then
-        /bin/bash -c "$(rm -rf "${HOME}/Library/Fonts/Hack"*.ttf)"
-
-        return
-      else
-        echo -n "${input} is an invalid option. Please type y or yes: "
-      fi
-    done
-  else
-    echo -n "hack font does not exist, or is already uninstalled."
-  fi
-}
-
-configure_gatech_access() {
-  input="machine github.gatech.edu\n"
-  echo -n "enter your gatech username: "
-  read -r login
-  input+="login ${login}\n"
-  echo -n "enter your gatech password: "
-  read -rs password
-  input+="password ${password}"
-  echo "${input}" >~/.netrc
 }
