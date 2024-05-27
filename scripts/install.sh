@@ -4,34 +4,6 @@ fix_compaudit() {
   compaudit | xargs chmod g-w,o-w
 }
 
-install_k9s() {
-  if [[ ! -x "$(command -v k9s)" ]]; then
-    cd "${DEVTOOLS_DIR}/k9s" && make build
-  else
-    echo -n "k9s is already installed"
-  fi
-}
-
-uninstall_k9s() {
-  if [[ -x "$(command -v k9s)" ]]; then
-    echo -n "Do you want to uninstall k9s? Type y or yes: "
-
-    while true; do
-      read -r input
-
-      if [[ $input = "y" || $input = "yes" ]]; then
-        cd "${DEVTOOLS_DIR}/k9s" && rm -rf execs && git clean -dfx
-
-        return
-      else
-        echo -n "${input} is an invalid option. Please type y or yes: "
-      fi
-    done
-  else
-    echo "k9s does not exist, or is already uninstalled."
-  fi
-}
-
 ssh_add() {
   ssh-add --apple-use-keychain ~/.ssh/id_ed25519
 }
