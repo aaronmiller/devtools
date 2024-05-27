@@ -1,46 +1,5 @@
 #!/usr/bin/env bash
 
-fix_compaudit() {
-  compaudit | xargs chmod g-w,o-w
-}
-
-ssh_keygen() {
-  if [[ ! -f "${HOME}/.ssh/id_ed25519" ]]; then
-    echo -n "Please enter your email address for the ssh key comment: "
-    read -r input
-
-    ssh-keygen -o -a 100 -t ed25519 -C "${input}"
-  fi
-}
-
-install_dotfiles() {
-  if [[ ! -d $DOTFILES_DIR ]]; then
-    /bin/bash -c "$(git clone --recurse-submodules git@github.com:aaronmiller/dotfiles.git "${HOME}"/dotfiles)"
-  else
-    echo -n "Dotfiles is already installed."
-  fi
-}
-
-uninstall_dotfiles() {
-  if [[ -d $DOTFILES_DIR ]]; then
-    echo -n "Do you want to uninstall dotfiles? Type y or yes: "
-
-    while true; do
-      read -r input
-
-      if [[ $input = "y" || $input = "yes" ]]; then
-        /bin/bash -c "$(rm -rf "${HOME}/dotfiles/")"
-
-        return
-      else
-        echo -n "${input} is an invalid option. Please type y or yes: "
-      fi
-    done
-  else
-    echo -n "dotfiles does not exist, or is already uninstalled."
-  fi
-}
-
 if [[ $(uname -s) == "Darwin" ]]; then
   install_asdf_plugins() {
     cut -d " " -f 1 <"${HOME}/.tool-versions" | while read -r line; do asdf plugin add "${line}"; done
@@ -282,5 +241,61 @@ uninstall_ohmyzsh() {
     done
   else
     echo "ohmyzsh does not exist, or is already uninstalled."
+  fi
+}
+
+if [[ $(uname -s) == "Linux" ]]; then
+  install_zsh() {
+    # Install Linux packages
+    sudo apt-get update && sudo apt-get install -y \
+      zsh \
+      zsh-autosuggestions \
+      zsh-syntax-highlighting
+  }
+
+  install_powerlevel10k() {
+    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+    ln -sf "${DOTFILES_DIR}/.p10k.zsh" "${HOME}/.p10k.zsh"
+  }
+fi
+
+fix_compaudit() {
+  compaudit | xargs chmod g-w,o-w
+}
+
+ssh_keygen() {
+  if [[ ! -f "${HOME}/.ssh/id_ed25519" ]]; then
+    echo -n "Please enter your email address for the ssh key comment: "
+    read -r input
+
+    ssh-keygen -o -a 100 -t ed25519 -C "${input}"
+  fi
+}
+
+install_dotfiles() {
+  if [[ ! -d $DOTFILES_DIR ]]; then
+    /bin/bash -c "$(git clone --recurse-submodules git@github.com:aaronmiller/dotfiles.git "${HOME}"/dotfiles)"
+  else
+    echo -n "Dotfiles is already installed."
+  fi
+}
+
+uninstall_dotfiles() {
+  if [[ -d $DOTFILES_DIR ]]; then
+    echo -n "Do you want to uninstall dotfiles? Type y or yes: "
+
+    while true; do
+      read -r input
+
+      if [[ $input = "y" || $input = "yes" ]]; then
+        /bin/bash -c "$(rm -rf "${HOME}/dotfiles/")"
+
+        return
+      else
+        echo -n "${input} is an invalid option. Please type y or yes: "
+      fi
+    done
+  else
+    echo -n "dotfiles does not exist, or is already uninstalled."
   fi
 }
