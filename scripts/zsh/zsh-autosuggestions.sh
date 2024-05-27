@@ -1,3 +1,7 @@
 #!/usr/bin/env bash
 
-. "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+if [[ $(uname -s) == "Darwin" ]]; then
+  . "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+else
+  . /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
