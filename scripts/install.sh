@@ -42,10 +42,6 @@ uninstall_dotfiles() {
 }
 
 if [[ $(uname -s) == "Darwin" ]]; then
-  ssh_add() {
-    ssh-add --apple-use-keychain ~/.ssh/id_ed25519
-  }
-
   install_asdf_plugins() {
     cut -d " " -f 1 <"${HOME}/.tool-versions" | while read -r line; do asdf plugin add "${line}"; done
     asdf install
