@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-. "$(brew --prefix)/share/zsh-navigation-tools/zsh-navigation-tools.plugin.zsh"
+if [[ $(uname -s) == "Darwin" ]]; then
+  . "$(brew --prefix)/share/zsh-navigation-tools/zsh-navigation-tools.plugin.zsh"
+fi

@@ -8,4 +8,7 @@
 . "${DEVTOOLS_DIR}/scripts/zsh/index.sh"
 . "${DEVTOOLS_DIR}/scripts/set-ignoreeof.sh"
 . "${DEVTOOLS_DIR}/scripts/powerlevel10k.sh"
-. "${DEVTOOLS_DIR}/kubernetes-devtools/scripts/index.sh"
+
+if [[ $(uname -s) == "Darwin" ]]; then
+  . "${DEVTOOLS_DIR}/kubernetes-devtools/scripts/index.sh"
+fi
