@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-for file in "${DEVTOOLS_DIR}/scripts/functions/"*; do
+for file in "${DEVTOOLS_DIR}/scripts/ssh/"*; do
   if [[ $file != *"index.sh" ]]; then
     . $file
   fi
