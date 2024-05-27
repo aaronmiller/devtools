@@ -27,5 +27,5 @@ _gbDr() {
 }
 
 groot() {
-  cd $(git root)
+  cd "$(git root)" || return
 }
