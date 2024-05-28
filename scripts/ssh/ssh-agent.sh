@@ -8,5 +8,5 @@ if [[ $(uname -s) == "Linux" ]]; then
 
   export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
   /usr/bin/keychain "${HOME}/.ssh/id_rsa"
-  source "${HOME}/.keychain/${HOSTNAME}-sh"
+  source "${HOME}/.keychain/${HOST}-sh"
 fi
