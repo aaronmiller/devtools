@@ -7,6 +7,7 @@ fi
 
 if [[ $(uname -s) == "Linux" ]]; then
   if [[ -f "${HOME}/powerlevel10k/powerlevel10k.zsh-theme" ]]; then
+    # Powerlevel10k Theme
     . "${HOME}/powerlevel10k/powerlevel10k.zsh-theme"
   fi
 fi
