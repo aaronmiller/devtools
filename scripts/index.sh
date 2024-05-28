@@ -4,6 +4,7 @@
 . "${DEVTOOLS_DIR}/scripts/aliases/index.sh"
 . "${DEVTOOLS_DIR}/scripts/install.sh"
 . "${DEVTOOLS_DIR}/scripts/functions/index.sh"
+. "${DEVTOOLS_DIR}/scripts/ssh/index.sh"
 . "${DEVTOOLS_DIR}/scripts/set-no-match.sh"
 . "${DEVTOOLS_DIR}/scripts/zsh/index.sh"
 . "${DEVTOOLS_DIR}/scripts/set-ignoreeof.sh"
