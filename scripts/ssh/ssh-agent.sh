@@ -7,4 +7,5 @@ if [[ $(uname -s) == "Linux" ]]; then
   fi
 
   export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
+  eval "$(keychain --eval id_ed25519)"
 fi
