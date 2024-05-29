@@ -248,6 +248,7 @@ if [[ $(uname -s) == "Linux" ]]; then
   install_packages() {
     sudo apt-get update && sudo apt-get install -y \
       keychain \
+      ripgrep \
       zsh \
       zsh-autosuggestions \
       zsh-syntax-highlighting
