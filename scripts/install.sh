@@ -130,8 +130,8 @@ if [[ $(uname -s) == "Darwin" ]]; then
   install_doomemacs() {
     if [[ ! -d $EMACSDIR ]]; then
       cd "${HOME}" || return
-      git clone --depth 1 https://github.com/doomemacs/doomemacs "${HOME}/.emacs.d"
-      doom install
+      git clone --depth 1 https://github.com/doomemacs/doomemacs "${HOME}/.config/emacs"
+      "${HOME}/.config/emacs/bin/doom" install
       return
     elif [[ ! -d "${EMACSDIR}/.local" ]]; then
       doom install
