@@ -152,7 +152,7 @@ if [[ $(uname -s) == "Darwin" ]]; then
         read -r input
 
         if [[ $input = "y" || $input = "yes" ]]; then
-          cd "${HOME}/.emacs.d" && rm -rf .local/
+          cd "${EMACSDIR}" && rm -rf .local/
 
           return
         else
