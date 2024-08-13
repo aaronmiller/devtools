@@ -1,7 +1,7 @@
 [submodule "emacs"]
 	path = emacs
 	url = git@github.com:aaronmiller/emacs.git
-	branch = amiller/emacs-28
+	branch = amiller/emacs-29.4
 [submodule "zsh-autosuggestions"]
 	path = zsh-autosuggestions
 	url = git@github.com:zsh-users/zsh-autosuggestions.git
