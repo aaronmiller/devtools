@@ -32,3 +32,6 @@
 [submodule "qmk_firmware"]
 	path = qmk_firmware
 	url = git@github.com:aaronmiller/qmk_firmware.git
+[submodule "eclipse.jdt.ls"]
+	path = eclipse.jdt.ls
+	url = git@github.com:aaronmiller/eclipse.jdt.ls.git
