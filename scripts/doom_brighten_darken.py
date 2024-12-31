@@ -39,10 +39,10 @@ def run(args):
             default_hex_color = line[default_hash_idx + 3 : default_hash_idx + 9]
             secondary_hex_color = line[secondary_hash_idx + 3 : secondary_hash_idx + 9]
 
-            default_r = default_hex_color[0:2]
+            default_r = default_hex_color[:2]
             default_g = default_hex_color[2:4]
             default_b = default_hex_color[4:6]
-            secondary_r = secondary_hex_color[0:2]
+            secondary_r = secondary_hex_color[:2]
             secondary_g = secondary_hex_color[2:4]
             secondary_b = secondary_hex_color[4:6]
 
@@ -126,7 +126,7 @@ def run(args):
                 hash_idx = line.index(' "#')
                 hex_color = line[hash_idx + 3 : hash_idx + 9]
 
-                r = hex_color[0:2]
+                r = hex_color[:2]
                 g = hex_color[2:4]
                 b = hex_color[4:6]
 
@@ -185,7 +185,7 @@ def run(args):
                 hash_idx = line.index(' "#')
                 hex_color = line[hash_idx + 3 : hash_idx + 9]
 
-                r = hex_color[0:2]
+                r = hex_color[:2]
                 g = hex_color[2:4]
                 b = hex_color[4:6]
 
