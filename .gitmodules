@@ -35,3 +35,6 @@
 [submodule "eclipse.jdt.ls"]
 	path = eclipse.jdt.ls
 	url = git@github.com:aaronmiller/eclipse.jdt.ls.git
+[submodule "remouseable"]
+	path = remouseable
+	url = git@github.com:aaronmiller/remouseable.git
