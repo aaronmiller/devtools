@@ -92,6 +92,7 @@ if [[ $(uname -s) == "Darwin" ]]; then
       make app
       sudo tic -xe alacritty,alacritty-direct extra/alacritty.info
       ln -sf "${DEVTOOLS_DIR}/alacritty/target/release/osx/Alacritty.app" "/Applications"
+      defaults write org.alacritty AppleFontSmoothing -int 0
     else
       echo -n "alacritty is already installed."
     fi
@@ -122,6 +123,7 @@ if [[ $(uname -s) == "Darwin" ]]; then
     if [[ $1 == "-f" || ! -x "$(command -v emacs)" ]]; then
       cd "${DEVTOOLS_DIR}/emacs" && ./autogen.sh && ./configure --with-json --with-modules --with-native-compilation && make && make install
       ln -sf "${DEVTOOLS_DIR}/emacs/nextstep/Emacs.app" "/Applications"
+      defaults write org.gnu.Emacs AppleFontSmoothing -int 0
     else
       echo -n "emacs is already installed."
     fi
