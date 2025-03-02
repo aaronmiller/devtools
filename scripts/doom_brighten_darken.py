@@ -128,6 +128,7 @@ def run(args):
             alacritty_data = f.readlines()
 
         alacritty_lines = []
+        zero_padding = "0"
 
         for idx, line in enumerate(alacritty_data):
             if ' "#' in line:
@@ -187,6 +188,7 @@ def run(args):
             k9s_skin_data = f.readlines()
 
         k9s_lines = []
+        zero_padding = "0"
 
         for idx, line in enumerate(k9s_skin_data):
             if ' "#' in line:
