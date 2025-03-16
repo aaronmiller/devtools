@@ -120,7 +120,7 @@ if [[ $(uname -s) == "Darwin" ]]; then
 
   install_emacs() {
     if [[ $1 == "-f" || ! -x "$(command -v emacs)" ]]; then
-      cd "${DEVTOOLS_DIR}/emacs" && ./autogen.sh && ./configure --with-json --with-modules --with-native-compilation && make && make install
+      cd "${DEVTOOLS_DIR}/emacs" && ./autogen.sh && ./configure --with-modules --with-native-compilation && make && make install
       ln -sf "${DEVTOOLS_DIR}/emacs/nextstep/Emacs.app" "/Applications"
     else
       echo -n "emacs is already installed."
