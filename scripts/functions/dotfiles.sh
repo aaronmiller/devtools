@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
 dotfiles() {
-  cd $DOTFILES_DIR
+  cd "${DOTFILES_DIR}" || return
 }

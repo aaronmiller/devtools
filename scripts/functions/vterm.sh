@@ -2,7 +2,7 @@
 
 if [[ $(uname -s) == "Darwin" ]]; then
   vterm_printf() {
-    if [ -n "$TMUX" ] && ([ "${TERM%%-*}" = "tmux" ] || [ "${TERM%%-*}" = "screen" ]); then
+    if [ -n "$TMUX" ] && { [ "${TERM%%-*}" = "tmux" ] || [ "${TERM%%-*}" = "screen" ]; }; then
       # Tell tmux to pass the escape sequences through
       printf "\ePtmux;\e\e]%s\007\e\\" "$1"
     elif [ "${TERM%%-*}" = "screen" ]; then
@@ -13,14 +13,14 @@ if [[ $(uname -s) == "Darwin" ]]; then
     fi
   }
 
-  if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
+  if [[ "$INSIDE_EMACS" = "vterm" ]]; then
     unset ZLE_RPROMPT_INDENT
     alias clear='vterm_printf "51;Evterm-clear-scrollback";tput clear'
   fi
 
-  if [[ "$INSIDE_EMACS" = 'vterm' ]] &&
+  if [[ "$INSIDE_EMACS" = "vterm" ]] &&
     [[ -n ${EMACS_VTERM_PATH} ]] &&
     [[ -f ${EMACS_VTERM_PATH}/etc/emacs-vterm-bash.sh ]]; then
-    source ${EMACS_VTERM_PATH}/etc/emacs-vterm-bash.sh
+    source "${EMACS_VTERM_PATH}/etc/emacs-vterm-bash.sh"
   fi
 fi

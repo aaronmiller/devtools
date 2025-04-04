@@ -2,7 +2,7 @@
 
 if [[ $(uname -s) == "Darwin" ]]; then
   omscs() {
-    cd "${HOME}/omscs/"
+    cd "${HOME}/omscs/" || return
   }
 
   add_notes() {
