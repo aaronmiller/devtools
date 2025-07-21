@@ -31,7 +31,7 @@ def run(args):
         exit(1)
 
     if args.doom_theme:
-        doom_theme_file = Path(Path.home() / "dotfiles" / ".doom.d" / "themes" / f"{doom_theme}-theme.el")
+        doom_theme_file = Path(Path.home() / "dotfiles" / ".doom.d" / "themes" / f"{args.theme}-theme.el")
 
         with doom_theme_file.open("r") as f:
             data = f.readlines()
@@ -103,7 +103,7 @@ def run(args):
                 new_default_hex_color = f"{new_default_r}{new_default_g}{new_default_b}"
                 new_secondary_hex_color = f"{new_secondary_r}{new_secondary_g}{new_secondary_b}"
 
-                lines.append(
+                doom_theme_lines.append(
                     [
                         idx,
                         default_hex_color,
@@ -113,7 +113,7 @@ def run(args):
                     ]
                 )
 
-        for line in lines:
+        for line in doom_theme_lines:
             data[line[0]] = data[line[0]].replace(line[1], line[2])
             data[line[0]] = data[line[0]].replace(line[3], line[4])
 
