@@ -247,7 +247,6 @@ def main():
 
     parser = argparse.ArgumentParser(prog="doombd", description="brighten or darken doom themes")
 
-    parser.add_argument("-f", "--filename", help="file name of the doom theme")
     parser.add_argument("-o", "--op", help="the operation to use, e.g., + or -")
     parser.add_argument("--amount", help="the amount to increase or decrease for all colors")
     parser.add_argument("-r", help="the amount to increase or decrease for red")
