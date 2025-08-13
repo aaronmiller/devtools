@@ -122,7 +122,7 @@ def run(args):
                 f.write(line)
 
     if args.alacritty:
-        alacritty_file = Path(Path.home() / "dotfiles" / ".alacritty.toml")
+        alacritty_file = Path(Path.home() / "dotfiles" / f"alacritty-{args.theme}.toml")
 
         with alacritty_file.open() as f:
             alacritty_data = f.readlines()
