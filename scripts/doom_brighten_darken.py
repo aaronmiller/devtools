@@ -182,7 +182,7 @@ def run(args):
                 f.write(line)
 
     if args.k9s:
-        k9s_skin_file = Path(Path.home() / "devtools" / "kubernetes-devtools" / "k9s" / "skins" / "moonlight-wilmersdorf.yaml")
+        k9s_skin_file = Path(Path.home() / "devtools" / "kubernetes-devtools" / "k9s" / "skins" / f"{args.theme}.yaml")
 
         with k9s_skin_file.open() as f:
             k9s_skin_data = f.readlines()
