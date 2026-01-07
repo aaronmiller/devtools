@@ -38,3 +38,9 @@
 [submodule "remouseable"]
 	path = remouseable
 	url = git@github.com:aaronmiller/remouseable.git
+[submodule "doom-emacs-minimap"]
+	path = doom-emacs-minimap
+	url = git@github.com:aaronmiller/doom-emacs-minimap.git
+[submodule "minimap-font"]
+	path = minimap-font
+	url = git@github.com:aaronmiller/minimap-font.git
