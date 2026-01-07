@@ -3,7 +3,3 @@
 install_default_uv_tools() {
   while read -r line; do uv tool install "${line}"; done <"${HOME}/.requirements.txt"
 }
-
-uninstall_default_uv_tools() {
-  uv tool uninstall --all
-}
