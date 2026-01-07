@@ -164,32 +164,10 @@ if [[ $(uname -s) == "Darwin" ]]; then
     fi
   }
 
-  install_hack_font() {
-    if [[ ! -f "${HOME}/Library/Fonts/HackNerdFontMono-Regular.ttf" ]]; then
+  install_fonts() {
       cp "${DEVTOOLS_DIR}/Hack/build/ttf/"* "${HOME}/Library/Fonts/"
-    else
-      echo -n "font hack is already installed."
-    fi
-  }
-
-  uninstall_hack_font() {
-    if [[ -f "${HOME}/Library/Fonts/HackNerdFontMono-Regular.ttf" ]]; then
-      echo -n "Do you want to uninstall hack font? Type y or yes: "
-
-      while true; do
-        read -r input
-
-        if [[ $input = "y" || $input = "yes" ]]; then
-          /bin/bash -c "$(rm -rf "${HOME}/Library/Fonts/Hack"*.ttf)"
-
-          return
-        else
-          echo -n "${input} is an invalid option. Please type y or yes: "
-        fi
-      done
-    else
-      echo -n "hack font does not exist, or is already uninstalled."
-    fi
+      cp "${DEVTOOLS_DIR}/doom-emacs-minimap/blockfont.ttf" "${HOME}/Library/Fonts/"
+      cp "${DEVTOOLS_DIR}/minimap-font/src/Minimap.ttf" "${HOME}/Library/Fonts/"
   }
 
   configure_gatech_access() {
