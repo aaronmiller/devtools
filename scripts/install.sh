@@ -179,16 +179,6 @@ if [[ $(uname -s) == "Darwin" ]]; then
     input+="password ${password}"
     echo "${input}" >~/.netrc
   }
-
-  install_remouseable() {
-    if [[ ! -x "$(command -v remouse)" ]]; then
-      echo -n "installing remouseable"
-      cd "${DEVTOOLS_DIR}/remouseable" && make build || return
-      cd /usr/local/bin && ln -sf "${DEVTOOLS_DIR}/remouseable/.build/remouse" . || return
-    else
-      echo -n "remouseable already installed"
-    fi
-  }
 fi
 
 install_ohmyzsh() {
