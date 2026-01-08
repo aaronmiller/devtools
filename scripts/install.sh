@@ -166,7 +166,6 @@ if [[ $(uname -s) == "Darwin" ]]; then
 
   install_fonts() {
       cp "${DEVTOOLS_DIR}/Hack/build/ttf/"* "${HOME}/Library/Fonts/"
-      cp "${DEVTOOLS_DIR}/doom-emacs-minimap/blockfont.ttf" "${HOME}/Library/Fonts/"
       cp "${DEVTOOLS_DIR}/minimap-font/src/Minimap.ttf" "${HOME}/Library/Fonts/"
   }
 
