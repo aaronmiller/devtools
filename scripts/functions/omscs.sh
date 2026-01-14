@@ -5,6 +5,10 @@ if [[ $(uname -s) == "Darwin" ]]; then
     cd "${HOME}/omscs/" || return
   }
 
+  6515() {
+    cd "${HOME}/omscs/omscs-cs6515/" || return
+  }
+
   add_notes() {
     if [[ $PWD = "${HOME}/omscs/"* ]]; then
       git add .
