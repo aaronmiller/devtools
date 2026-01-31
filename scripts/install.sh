@@ -277,3 +277,15 @@ uninstall_dotfiles() {
     echo -n "dotfiles does not exist, or is already uninstalled."
   fi
 }
+
+add_git_user() {
+  echo -n "Please enter your Git username: "
+  read -r username
+  echo -n "Please enter your email address: "
+  read -r email
+
+  git config set --file ~/.gitconfig_user user.name "${username}"
+  git config set --file ~/.gitconfig_user user.email "${email}"
+
+  echo -n "Successfully added Git username and email"
+}
