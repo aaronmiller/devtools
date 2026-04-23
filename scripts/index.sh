@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 . "${DEVTOOLS_DIR}/scripts/env/index.sh"
-. "${DEVTOOLS_DIR}/scripts/aliases/index.sh"
 . "${DEVTOOLS_DIR}/scripts/install.sh"
 . "${DEVTOOLS_DIR}/scripts/functions/index.sh"
 . "${DEVTOOLS_DIR}/scripts/ssh/index.sh"
