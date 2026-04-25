@@ -5,7 +5,6 @@
 . "${DEVTOOLS_DIR}/scripts/functions/index.sh"
 . "${DEVTOOLS_DIR}/scripts/ssh/index.sh"
 . "${DEVTOOLS_DIR}/scripts/set-no-match.sh"
-. "${DEVTOOLS_DIR}/scripts/zsh/index.sh"
 . "${DEVTOOLS_DIR}/scripts/set-ignoreeof.sh"
 
 if [[ $(uname -s) == "Darwin" ]]; then
